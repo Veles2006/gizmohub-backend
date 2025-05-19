@@ -1,0 +1,13 @@
+require('dotenv').config();
+const express = require('express');
+const cors = require('cors');
+const app = express();
+const connectDB = require('./config/db');
+const PORT = process.env.PORT || 5000;
+app.use(cors());
+app.use(express.json());
+connectDB();
+const productRoutes = require('./routes/productRoutes');
+app.use('/api/products', productRoutes);
+app.get('/api/health', (req, res) => res.send({ status: 'OK' }));
+app.listen(PORT, () => console.log(`Server running on port ${PORT} The World!`));
